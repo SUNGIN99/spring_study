@@ -1,6 +1,7 @@
 package com.example.spring_study.domain.posts;
 
 
+import com.example.spring_study.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @ToString
 @Entity
-public class Posts { // DB에 매칭 시킬 클래스
+public class Posts extends BaseTimeEntity { // DB에 매칭 시킬 클래스
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
