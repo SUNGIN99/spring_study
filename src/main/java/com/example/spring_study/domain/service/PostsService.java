@@ -2,13 +2,16 @@ package com.example.spring_study.domain.service;
 
 import com.example.spring_study.domain.posts.Posts;
 import com.example.spring_study.domain.posts.PostsRepository;
+import com.example.spring_study.web.dto.PostsListResponseDto;
 import com.example.spring_study.web.dto.PostsResponseDto;
 import com.example.spring_study.web.dto.PostsSaveRequestDto;
 import com.example.spring_study.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -36,6 +39,13 @@ public class PostsService {
 
         PostsResponseDto responseDto = new PostsResponseDto(entity);
         return responseDto;
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc(){
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new) // .map(posts -> new PostsListResponseDto(posts))
+                .collect(Collectors.toList());
     }
 
 }
