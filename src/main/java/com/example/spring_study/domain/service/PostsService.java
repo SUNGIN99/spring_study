@@ -2,10 +2,7 @@ package com.example.spring_study.domain.service;
 
 import com.example.spring_study.domain.posts.Posts;
 import com.example.spring_study.domain.posts.PostsRepository;
-import com.example.spring_study.web.dto.PostsListResponseDto;
-import com.example.spring_study.web.dto.PostsResponseDto;
-import com.example.spring_study.web.dto.PostsSaveRequestDto;
-import com.example.spring_study.web.dto.PostsUpdateRequestDto;
+import com.example.spring_study.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +43,16 @@ public class PostsService {
         return postsRepository.findAllDesc().stream()
                 .map(PostsListResponseDto::new) // .map(posts -> new PostsListResponseDto(posts))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public PostsDeleteResponseDto deleteById(Long id){
+        Posts posts = postsRepository.findById(id).
+                orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = " + id));
+
+        PostsDeleteResponseDto delResponse = new PostsDeleteResponseDto(posts);
+        postsRepository.delete(posts);
+        return delResponse;
     }
 
 }

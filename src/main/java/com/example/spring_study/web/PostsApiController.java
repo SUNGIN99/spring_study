@@ -1,6 +1,7 @@
 package com.example.spring_study.web;
 
 import com.example.spring_study.domain.service.PostsService;
+import com.example.spring_study.web.dto.PostsDeleteResponseDto;
 import com.example.spring_study.web.dto.PostsResponseDto;
 import com.example.spring_study.web.dto.PostsSaveRequestDto;
 import com.example.spring_study.web.dto.PostsUpdateRequestDto;
@@ -28,4 +29,9 @@ public class PostsApiController {
         return postsService.findById(id);
     }
 
+
+    @DeleteMapping("/api/v1/posts/{id}")
+    public PostsDeleteResponseDto deleteById(@PathVariable Long id){
+        return postsService.deleteById(id);
+    }
 }
