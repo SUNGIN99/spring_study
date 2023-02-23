@@ -1,5 +1,6 @@
 package com.example.spring_study.web;
 
+import com.example.spring_study.config.auth.LoginUser;
 import com.example.spring_study.config.auth.dto.SessionUser;
 import com.example.spring_study.domain.service.PostsService;
 import com.example.spring_study.web.dto.PostsResponseDto;
@@ -16,13 +17,13 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     private final PostsService postsService;
-    private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @LoginUser SessionUser user){
         model.addAttribute("posts", postsService.findAllDesc());
 
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        //SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        //어노테이션으로 재구성하여 파라미터로 받게됨
         if (user != null){
             model.addAttribute("userName", user.getName());
         }
